@@ -1,21 +1,23 @@
 def readInputFile(filename):
-  x, y = [], []
+  cities = []
   with open(filename) as f:
     next(f)
     for data in f.read().splitlines():
       coordinate = data.split('\t')
-      x.append(data[0])
-      y.append(data[1])
-  return x, y
+      cities.append(data)
+  return cities
 
-def WriteOutputFile(filename, visitation):
+def WriteOutputFile(filename, visitation_order):
   with open(filename, 'w') as f:
     f.write("index\n")
-    for v in visitation:
+    for v in visitation_order:
       f.write(v + "\n")
+  return
+
+
 
 def main():
-  x, y = readInputFile("input_0.csv")
+  cities = readInputFile("input_0.csv")
   
 
 if __name__ == '__main__':
