@@ -1,20 +1,21 @@
 import math
 
-def readInputFile(filename):
+def read_input_file(filename):
   cities = []
   with open(filename) as f:
     next(f)
-    for data in f.read().splitlines():
-      coordinate = data.split(',')
-      # print(coordinate)
+    line = f.readline()
+    while line:
+      coordinate = line.split(',')
       cities.append(list(map(float, coordinate)))
+      line = f.readline()
   return cities
 
-def WriteOutputFile(filename, visitation_order):
+def write_output_file(filename, visitation_order):
   with open(filename, 'w') as f:
     f.write("index\n")
     for v in visitation_order:
-      f.write(v + "\n")
+      f.write(str(v) + "\n")
   return
 
 def distance(city1, city2):
@@ -49,7 +50,7 @@ def solve(cities):
   return
   
 def main():
-  cities = readInputFile("input_2.csv")
+  cities = read_input_file("input_2.csv")
   solve(cities)
 
 if __name__ == '__main__':

@@ -1,17 +1,18 @@
 import math
 import random
 
-def readInputFile(filename):
+def read_input_file(filename):
   cities = []
   with open(filename) as f:
     next(f)
-    for data in f.read().splitlines():
-      coordinate = data.split(',')
-      # print(coordinate)
+    line = f.readline()
+    while line:
+      coordinate = line.split(',')
       cities.append(list(map(float, coordinate)))
+      line = f.readline()
   return cities
 
-def WriteOutputFile(filename, visitation_order):
+def write_output_file(filename, visitation_order):
   with open(filename, 'w') as f:
     f.write("index\n")
     for v in visitation_order:
@@ -56,39 +57,35 @@ def initialize_visitation_order(cities):
 def exchange_two_node(visitation_order, i, j, dist):
   n = len(visitation_order)
   front, back = visitation_order[i], visitation_order[j]
-  front_front, front_back = visitation_order[(n + i - 1) % n], visitation_order[(i + 1) % n]
-  back_front, back_back = visitation_order[(n + j - 1) % n], visitation_order[(j + 1) % n]
-  dist_front1 = dist[front_front][front]
-  dist_front2 = dist[front][front_back]
-  dist_back1 = dist[back_front][back]
-  dist_back2 = dist[back][back_back]
-  dist_front1_new = dist[front_front][back]
-  dist_front2_new = dist[back][front_back]
-  dist_back1_new = dist[back_front][front]
-  dist_back2_new = dist[front][back_back]
-  
-  if dist_front1 + dist_front2 + dist_back1 + dist_back2 > dist_front1_new + dist_front2_new + dist_back1_new + dist_back2_new :
-    visitation_order[i] = back
-    visitation_order[j] = front
+  front_next = visitation_order[i + 1]
+  back_next = visitation_order[(j + 1) % n]
+  dist_front = dist[front][front_next]
+  dist_back = dist[back][back_next]
+  dist_front_new = dist[front][back]
+  dist_back_new = dist[front_next][back_next]
+  if dist_front + dist_back > dist_front_new + dist_back_new:
+    tmp = visitation_order[i + 1 : j + 1]
+    tmp.reverse()
+    visitation_order[i + 1 : j + 1] = tmp
   return visitation_order
 
 def solve(cities):
   n = len(cities)
   dist = all_distance(cities)
   visitation_order = initialize_visitation_order(cities)
-  for i in range(10000):
-    for j in range(n):
-      for k in range(j+1, n):
-        exchange_two_node(visitation_order, j, k, dist)
+  for i in range(100):
+    for j in range(n-2):
+      for k in range(j+2, n):
+        visitation_order = exchange_two_node(visitation_order, j, k, dist)
   res = loop_distance(dist, visitation_order)
   return res, visitation_order
 
   
 def main():
-  cities = readInputFile("input_3.csv")
+  cities = read_input_file("input_6.csv")
   dist, visitation_order = solve(cities)
   print(dist)
-  # WriteOutputFile("output_3.csv", visitation_order)
+  write_output_file("output_6.csv", visitation_order)
 
 if __name__ == '__main__':
   main()
