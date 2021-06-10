@@ -49,7 +49,7 @@ def solve(cities):
   return
   
 def main():
-  cities = readInputFile("input_0.csv")
+  cities = readInputFile("input_2.csv")
   solve(cities)
 
 if __name__ == '__main__':
