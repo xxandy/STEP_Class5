@@ -21,7 +21,7 @@ def write_output_file(filename, visitation_order):
 def distance(city1, city2):
   return math.sqrt((city1[0] - city2[0]) ** 2 + (city1[1] - city2[1]) ** 2)
 
-def all_distance(cities):
+def distance_matrix(cities):
   n = len(cities)
   dist = [[0] * n for i in range(n)]
   for i in range(n):
@@ -42,7 +42,7 @@ def dfs(S, city_now, dp, n, dist):
   return dp[S][city_now]
 
 def solve(cities):
-  dist = all_distance(cities)
+  dist = distance_matrix(cities)
   n = len(cities)
   dp = [[-1] * n for _ in range(1 << n)]
   min_dist = dfs(0, 0, dp, n, dist)

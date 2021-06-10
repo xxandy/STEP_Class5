@@ -22,7 +22,7 @@ def write_output_file(filename, visitation_order):
 def distance(city1, city2):
   return math.sqrt((city1[0] - city2[0]) ** 2 + (city1[1] - city2[1]) ** 2)
 
-def all_distance(cities):
+def distance_matrix(cities):
   n = len(cities)
   dist = [[0] * n for i in range(n)]
   for i in range(n):
@@ -40,7 +40,7 @@ def loop_distance(dist, visitation_order):
 
 def initialize_visitation_order(cities):
   n = len(cities)
-  dist = all_distance(cities)
+  dist = distance_matrix(cities)
   city_now = 0
   unvisited_cities = set(range(1, n))
   visitation_order = [0]
@@ -71,7 +71,7 @@ def exchange_two_node(visitation_order, i, j, dist):
 
 def solve(cities):
   n = len(cities)
-  dist = all_distance(cities)
+  dist = distance_matrix(cities)
   visitation_order = initialize_visitation_order(cities)
   for i in range(100):
     for j in range(n-2):
