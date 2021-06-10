@@ -34,6 +34,7 @@ def solve(cities):
   res = 0
   city_now = 0
   unvisited_cities = set(range(1, n))
+  visitation_order = [0]
   while len(unvisited_cities) > 0:
     min_dist = 10 ** 10
     city_next = 0
@@ -41,14 +42,16 @@ def solve(cities):
       min_dist = min(min_dist, dist[city_now][unvisited_city])
       city_next = unvisited_city
     unvisited_cities.remove(city_next)
+    visitation_order.append(city_next)
     res += min_dist
   res += dist[city_next][0]
-  return(res)
+  return res
 
   
 def main():
-  cities = readInputFile("input_6.csv")
+  cities = readInputFile("input_3.csv")
   print(solve(cities))
+
 
 if __name__ == '__main__':
   main()
