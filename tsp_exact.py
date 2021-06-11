@@ -45,7 +45,7 @@ def solve(cities):
   dist = distance_matrix(cities)
   n = len(cities)
   dp = [[-1] * n for _ in range(1 << n)]
-  min_dist = dfs(0, 0, dp, n, dist)
+  min_dist = dfs(0, 0, dp, n, dist) #dp[0][0] := 一周の距離
   print(min_dist)
   return
   
