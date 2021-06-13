@@ -73,6 +73,8 @@ def solve(cities):
   n = len(cities)
   dist = distance_matrix(cities)
   visitation_order = initialize_visitation_order(cities)
+  # ALEX_NOTE:  I think the 100 is an arbitrary number (tuning?)
+  #             If so, a comment explaining that would be good.
   for i in range(100):
     for j in range(n-2):
       for k in range(j+2, n):
