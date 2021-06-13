@@ -26,6 +26,8 @@ def distance_matrix(cities):
   dist = [[0] * n for i in range(n)]
   for i in range(n):
     for j in range(i, n):
+      # ALEX_COMMENT:  when i == j,  you dont need to invert  i/j  and j/i 
+      #                (you may not even need the entry?  the distrans from a city to itself is always zero)
       dist[i][j] = dist[j][i] = distance(cities[i], cities[j])
   return dist
 
@@ -34,6 +36,10 @@ def dfs(S, city_now, dp, n, dist):
     return dp[S][city_now]
   if S == (1 << n) - 1 and city_now == 0: #全ての点を訪れた
     return 0
+  # ALEX_COMMENT:  the kind of programming below, using an arbitrarily "large number"
+  #                to initialize, is unacceptable in professional work.
+  #                you either have a reset flag,  or you initialize it with the first element
+  #                of the sequence.
   res = 10 ** 10  #大きい数
   for city_next in range(n):
     if (S >> city_next & 1) == 0: #city_nextは未訪問
